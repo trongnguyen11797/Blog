@@ -1,0 +1,13 @@
+.blog__list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+
+  .media {
+    .content {
+      display: inline-block;
+      width: 70%;
+    }
+  }
+}
