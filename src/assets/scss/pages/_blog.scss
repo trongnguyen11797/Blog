@@ -5,9 +5,13 @@
 
 
   .media {
-    .content {
+    &__content {
       display: inline-block;
       width: 70%;
+    }
+
+    &__title {
+      color: #333;
     }
   }
 }

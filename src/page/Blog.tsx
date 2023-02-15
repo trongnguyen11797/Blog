@@ -36,22 +36,24 @@ const Blog = () => {
   }, [page]);
 
   return (
-    <div className='container'>
-      <h1 className='py-3 text-center'>blog article</h1>
-      <ul className='list-unstyled my-3 blog__list'>
-        {blog && blog.length && (
-          <>
-            {blog.map((item) => (
-              <BlogListComponent key={item.id} data={item} />
-            ))}
+    <main className='content'>
+      <div className='container'>
+        <h1 className='py-3 text-center'>Blog article</h1>
+        <ul className='list-unstyled my-3 blog__list'>
+          {blog && blog.length && (
+            <>
+              {blog.map((item) => (
+                <BlogListComponent key={item.id} data={item} />
+              ))}
 
-            <PaginationComponent currentPage={page} data={blog} setPage={setPage} />
-          </>
-        )}
-      </ul>
+              <PaginationComponent currentPage={page} data={blog} setPage={setPage} />
+            </>
+          )}
+        </ul>
 
-      {loading && <LoadingComponent />}
-    </div>
+        {loading && <LoadingComponent />}
+      </div>
+    </main>
   );
 };
 
