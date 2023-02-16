@@ -1,9 +1,11 @@
-export const actionTypes = {
-  // Create blog
-  CREATE_BLOG_SUCCESS: 'CREATE_BLOG_SUCCESS',
-  CREATE_BLOG_PENDING: 'CREATE_BLOG_PENDING',
-  CREATE_BLOG_FAILED: 'CREATE_BLOG_FAILED',
+// Get blog lists
+export const GET_TOTAL = 'GET_TOTAL';
 
-  // Save blog data
-  SAVE_BLOG_LISTS: 'SAVE_BLOG_LISTS',
-};
+// Get blog with pagination
+export const GET_BLOG_PAG = 'GET_BLOG_PAG';
+
+// Create blog
+export const CREATE_BLOG = 'CREATE_BLOG';
+
+// Edit blog
+export const EDIT_BLOG = 'EDIT_BLOG';
