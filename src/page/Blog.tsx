@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 
-import BlogListComponent from 'src/components/BlogList';
+import blogApi from 'src/api/blog/blogApi';
+
+import BlogItemComponent from 'src/components/BlogItem';
 import LoadingComponent from 'src/components/Loading';
 import PaginationComponent from 'src/components/Pagination';
+import TitleComponent from 'src/components/Title';
 
 import { BlogListType } from 'src/models/blog.model';
-
-import blogApi from '../api/blog/blogApi';
 
 const PAGE_LIMIT = 10;
 
@@ -37,12 +38,13 @@ const Blog = () => {
 
   return (
     <div className='container'>
-      <h1 className='py-3 text-center'>blog article</h1>
+      <TitleComponent title='Blog article' />
+
       <ul className='list-unstyled my-3 blog__list'>
         {blog && blog.length && (
           <>
             {blog.map((item) => (
-              <BlogListComponent key={item.id} data={item} />
+              <BlogItemComponent key={item.id} data={item} />
             ))}
 
             <PaginationComponent currentPage={page} data={blog} setPage={setPage} />
@@ -50,7 +52,7 @@ const Blog = () => {
         )}
       </ul>
 
-      {!loading && <LoadingComponent />}
+      {loading && <LoadingComponent />}
     </div>
   );
 };
