@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
-import BlogListComponent from 'src/components/BlogList';
+import blogApi from 'src/api/blog/blogApi';
+
+import BlogItemComponent from 'src/components/BlogItem';
 import LoadingComponent from 'src/components/Loading';
 import PaginationComponent from 'src/components/Pagination';
 
 import { BlogListType } from 'src/models/blog.model';
-
-import blogApi from '../api/blog/blogApi';
 
 const PAGE_LIMIT = 10;
 
@@ -42,7 +42,7 @@ const Blog = () => {
         {blog && blog.length && (
           <>
             {blog.map((item) => (
-              <BlogListComponent key={item.id} data={item} />
+              <BlogItemComponent key={item.id} data={item} />
             ))}
 
             <PaginationComponent currentPage={page} data={blog} setPage={setPage} />
