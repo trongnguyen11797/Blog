@@ -1,0 +1,12 @@
+.title__container {
+  margin-bottom: 20px;
+  position: relative;
+  text-align: center;
+
+  btn {
+    position: absolute; 
+    left: 20px;
+    top: 50%;
+    transform: translateX(-50%);
+  }
+}

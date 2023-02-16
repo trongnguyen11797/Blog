@@ -7,8 +7,9 @@ type Props = {
   data: BlogListType;
 };
 
-const BlogListComponent = (props: Props) => {
+const BlogItemComponent = (props: Props) => {
   const { data } = props;
+
   return (
     <li className='media'>
       <Link to={`${LinkConstant.blog}/${data.id}`}>
@@ -24,4 +25,4 @@ const BlogListComponent = (props: Props) => {
   );
 };
 
-export default memo(BlogListComponent);
+export default memo(BlogItemComponent);

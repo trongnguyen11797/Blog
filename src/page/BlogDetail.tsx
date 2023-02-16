@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+
 import blogApi from 'src/api/blog/blogApi';
+
 import LoadingComponent from 'src/components/Loading';
 import NotFoundDataComponent from 'src/components/NotfoundData';
+import TitleComponent from 'src/components/Title';
 
 import { BlogListType } from 'src/models/blog.model';
 
@@ -29,13 +32,15 @@ const BlogDetail = () => {
 
     fetchBlogDetail();
   }, []);
-
+  if (loading) return <LoadingComponent />;
   return (
     <main className='content blog__detail'>
       <div className='container'>
-        {blogDetail && !loading && Object.keys(blogDetail).length ? (
+        {loading ? (
+          <LoadingComponent />
+        ) : blogDetail && !loading && Object.keys(blogDetail).length ? (
           <>
-            <h1 className='mb-3 text-center'>Blog detail</h1>
+            <TitleComponent title='Blog detail' isBack />
 
             <div className='card'>
               <img src={blogDetail.image} className='card-img-top' alt='... ' />
