@@ -26,7 +26,6 @@ const BlogDetail = () => {
         setBlogDetail(resp);
       } else {
         setLoading(false);
-        console.log(resp.msg);
       }
     };
 

@@ -1,6 +1,6 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable no-alert */
 import axios from 'axios';
-import { put, takeEvery, takeLatest } from 'redux-saga/effects';
+import { put, takeEvery } from 'redux-saga/effects';
 import { PAGE_LIMIT, URL_API } from 'src/common/constant';
 
 import {
