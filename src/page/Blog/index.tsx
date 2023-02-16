@@ -21,12 +21,8 @@ const Blog = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
   const {
-    blogPagination, loadingBlogPag, total
+    blogPagination, loadingBlogPag
   } = useAppSelector((state) => state.blog);
-  console.log('Data: ', {
-    blogPagination,
-    total
-  });
 
   const [modalList, setModalList] = useState<ModalListsType>({
     isShow: false,

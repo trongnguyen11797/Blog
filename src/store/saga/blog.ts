@@ -43,8 +43,10 @@ function* createBlogSaga(action: any): any {
     const resp: any = yield axios.post(URL_API.blog, { body: params });
 
     yield put(createBlogSuccessReducer({ page, newData: resp.data }));
+    alert('Create success');
     onResetForm();
   } catch (error) {
+    alert('Create failed');
     yield put(createBlogFailedReducer());
   }
 }
@@ -88,9 +90,11 @@ function* editBlogPagSaga(action: any): any {
   try {
     const resp = yield axios.put(`${URL_API.blog}/${data.id}`, { body: params });
 
-    onResetForm();
+    alert('Edit success');
     yield put(editBlogSuccessReducer(resp.data));
+    onResetForm();
   } catch (error) {
+    alert('Edit failed');
     yield put(editBlogFailedReducer());
   }
 }
