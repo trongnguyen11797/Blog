@@ -16,7 +16,7 @@ const TitleComponent = (props: Props) => {
 
       {isBack && (
         <button type='button' onClick={() => navigate(-1)} className='btn btn-light'>
-          back
+          &#8592; Back
         </button>
       )}
     </div>
