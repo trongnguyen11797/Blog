@@ -1,12 +1,12 @@
 .title__container {
-  margin-bottom: 20px;
   position: relative;
   text-align: center;
 
-  btn {
+  button {
+    padding: 0 10px;
     position: absolute; 
-    left: 20px;
+    left: 0px;
     top: 50%;
-    transform: translateX(-50%);
+    transform: translateY(-50%);
   }
 }
