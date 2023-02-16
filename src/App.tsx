@@ -25,7 +25,9 @@ const App = () => {
   return (
     <div className='container__wrapper'>
       <HeaderLayout />
-      <RouterProvider router={router} />
+      <main className='content'>
+        <RouterProvider router={router} />
+      </main>
       <FooterLayout />
     </div>
   );

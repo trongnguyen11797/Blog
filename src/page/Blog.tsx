@@ -37,8 +37,8 @@ const Blog = () => {
   }, [page]);
 
   return (
-    <main className='content blog__list'>
-      <div className='container'>
+    <div className='container'>
+      <div className='blog__list'>
         <TitleComponent title='Blog article' />
 
         <ul className='list-unstyled my-3 '>
@@ -55,7 +55,7 @@ const Blog = () => {
 
         {loading && <LoadingComponent />}
       </div>
-    </main>
+    </div>
   );
 };
 

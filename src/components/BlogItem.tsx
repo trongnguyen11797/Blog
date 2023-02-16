@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import LinkConstant from 'src/common/constant';
+
 import { BlogListType } from 'src/models/blog.model';
 
 type Props = {
@@ -12,7 +12,7 @@ const BlogItemComponent = (props: Props) => {
 
   return (
     <li className='media'>
-      <Link to={`${LinkConstant.blog}/${data.id}`}>
+      <Link to={data.id}>
         <img src={data.image} className='mr-3' width={64} height={64} alt='...' loading='lazy' />
       </Link>
       <div className='media-body'>

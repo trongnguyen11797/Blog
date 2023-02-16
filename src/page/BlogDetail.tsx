@@ -34,7 +34,7 @@ const BlogDetail = () => {
   }, []);
   if (loading) return <LoadingComponent />;
   return (
-    <main className='content blog__detail'>
+    <article className='blog__detail'>
       <div className='container'>
         {loading ? (
           <LoadingComponent />
@@ -55,7 +55,7 @@ const BlogDetail = () => {
         )}
       </div>
       {loading && <LoadingComponent />}
-    </main>
+    </article>
   );
 };
 
