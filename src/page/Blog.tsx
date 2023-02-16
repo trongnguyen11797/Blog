@@ -50,7 +50,7 @@ const Blog = () => {
         )}
       </ul>
 
-      {loading && <LoadingComponent />}
+      {!loading && <LoadingComponent />}
     </div>
   );
 };
