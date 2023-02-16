@@ -12,7 +12,7 @@ import NotFoundDataComponent from 'src/components/NotfoundData';
 import PaginationComponent from 'src/components/Pagination';
 import TitleComponent from 'src/components/Title';
 
-import { ModalListsType } from 'src/models/blog.model';
+import { BlogListType, ModalListsType } from 'src/models/blog.model';
 
 import ModalBlog from './Modal';
 
@@ -21,12 +21,8 @@ const Blog = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
   const {
-    blogPagination, loadingBlogPag, total
+    blogPagination, loadingBlogPag
   } = useAppSelector((state) => state.blog);
-  console.log('Data: ', {
-    blogPagination,
-    total
-  });
 
   const [modalList, setModalList] = useState<ModalListsType>({
     isShow: false,
@@ -34,7 +30,16 @@ const Blog = () => {
     type: 'create',
   });
 
-  // Fetch blog with pagination, rerender if router change
+  const onEditBlog = (blog: BlogListType) => {
+    setModalList(() => ({
+      isShow: true,
+      data: blog,
+      type: 'edit',
+    }));
+  };
+
+  // Fetch blog with pagination, re-render if router change
+  // Fetch total data
   useEffect(() => {
     dispatch({ type: GET_BLOG_PAG, payload: { page: Number(searchParams.get('page')) || 1, limit: PAGE_LIMIT } });
     dispatch({ type: GET_TOTAL });
@@ -60,7 +65,7 @@ const Blog = () => {
           {blogPagination && blogPagination.length > 0 && (
             <>
               {blogPagination.map((item) => (
-                <BlogItemComponent key={item.id} data={item} />
+                <BlogItemComponent key={item.id} data={item} onEditBlog={onEditBlog} />
               ))}
               <PaginationComponent currentPage={Number(searchParams.get('page')) || 1} limit={PAGE_LIMIT} />
             </>

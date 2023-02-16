@@ -8,6 +8,7 @@ import {
 
   GET_TOTAL,
   GET_BLOG_PAG,
+  EDIT_BLOG,
 } from '../action';
 
 import {
@@ -20,7 +21,10 @@ import {
   getBlogPagSuccessReducer,
 
   getTotalDataSuccessReducer,
-  getTotalDataFailedReducer
+  getTotalDataFailedReducer,
+  editBlogReducer,
+  editBlogFailedReducer,
+  editBlogSuccessReducer
 } from '../reducer/blog';
 
 // Create blog
@@ -39,8 +43,10 @@ function* createBlogSaga(action: any): any {
     const resp: any = yield axios.post(URL_API.blog, { body: params });
 
     yield put(createBlogSuccessReducer({ page, newData: resp.data }));
+    alert('Create success');
     onResetForm();
   } catch (error) {
+    alert('Create failed');
     yield put(createBlogFailedReducer());
   }
 }
@@ -71,8 +77,31 @@ function* getBlogPagSaga(action: any): any {
   }
 }
 
+// Edit blog
+function* editBlogPagSaga(action: any): any {
+  yield put(editBlogReducer());
+  const { payload } = action;
+  const { data, onResetForm } = payload;
+  const params = {
+    title: data.title.value,
+    image: data.image.value,
+    content: data.content.value,
+  };
+  try {
+    const resp = yield axios.put(`${URL_API.blog}/${data.id}`, { body: params });
+
+    alert('Edit success');
+    yield put(editBlogSuccessReducer(resp.data));
+    onResetForm();
+  } catch (error) {
+    alert('Edit failed');
+    yield put(editBlogFailedReducer());
+  }
+}
+
 export function* watchBlogSaga() {
-  yield takeEvery(CREATE_BLOG, createBlogSaga);
   yield takeEvery(GET_TOTAL, getBlogSaga);
   yield takeEvery(GET_BLOG_PAG, getBlogPagSaga);
+  yield takeEvery(CREATE_BLOG, createBlogSaga);
+  yield takeEvery(EDIT_BLOG, editBlogPagSaga);
 }

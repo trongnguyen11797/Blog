@@ -67,6 +67,10 @@
       display: flex;
       gap: 20px;
       justify-content: center;
+
+      button {
+        min-width: 100px;
+      }
     }
 
     .title {

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { REGEX_URL } from 'src/common/constant';
+import LoadingComponent from 'src/components/Loading';
 
 import {
   ArgumentOnBlurForm,
@@ -9,9 +10,9 @@ import {
   DataModalFormKey,
   ModalListsType
 } from 'src/models/blog.model';
-import { CREATE_BLOG } from 'src/store/action';
+import { CREATE_BLOG, EDIT_BLOG } from 'src/store/action';
 
-import { useAppDispatch } from 'src/store/hooks';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
 
 type Props = {
   modalLists: ModalListsType;
@@ -38,8 +39,29 @@ const ModalBlog = (props: Props) => {
 
   const [searchParams] = useSearchParams();
   const dispatch = useAppDispatch();
+  const { loadingCreate, loadingEdit } = useAppSelector((state) => state.blog);
+
   // Data form
   const [formData, setFormData] = useState<DataModalForm>(initialFormData);
+
+  useEffect(() => {
+    if (modalLists.data && Object.keys(modalLists.data).length > 0) {
+      setFormData({
+        title: {
+          value: modalLists.data.title,
+          msg: '',
+        },
+        content: {
+          value: modalLists.data.content,
+          msg: '',
+        },
+        image: {
+          value: modalLists.data.image,
+          msg: '',
+        }
+      });
+    }
+  }, [modalLists.data]);
 
   // Change the data
   const onChangeForm = ({ value, type }: { value: string; type: DataModalFormKey }) => {
@@ -86,7 +108,11 @@ const ModalBlog = (props: Props) => {
   // Submit form
   const onSubmit = () => {
     if (Object.keys(formData).every((key) => !formData[key as DataModalFormKey].msg)) {
-      dispatch({ type: CREATE_BLOG, payload: { data: formData, page: Number(searchParams.get('page')) || 1, onResetForm } });
+      if (modalLists.type === 'create') {
+        dispatch({ type: CREATE_BLOG, payload: { data: formData, page: Number(searchParams.get('page')) || 1, onResetForm } });
+      } else {
+        dispatch({ type: EDIT_BLOG, payload: { data: { ...formData, id: modalLists.data?.id }, onResetForm } });
+      }
     }
   };
 
@@ -100,7 +126,10 @@ const ModalBlog = (props: Props) => {
     <div className={`blog__modal ${modalLists.isShow ? 'show' : ''}`}>
       <div className='inner'>
         <form>
-          <h3 className='title'>Create blog</h3>
+          <h3 className='title'>
+            {modalLists.type === 'create' ? 'Create blog' : 'Edit blog'}
+          </h3>
+
           <div className='form-group'>
             <label htmlFor='exampleFormControlInput1'>Title</label>
             <input
@@ -147,15 +176,18 @@ const ModalBlog = (props: Props) => {
             <button type='button' className='btn btn-light' onClick={onResetForm}>
               Cancel
             </button>
+
             <button
               type='button'
               className='btn btn-success'
               disabled={Object.keys(formData).some((key) => formData[key as DataModalFormKey].msg)}
               onClick={onSubmit}
             >
-              Create
+              {modalLists.type === 'create' ? 'Create' : 'Edit'}
             </button>
           </div>
+
+          {(loadingCreate || loadingEdit) && <LoadingComponent isInside />}
         </form>
       </div>
 

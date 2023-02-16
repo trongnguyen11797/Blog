@@ -5,13 +5,15 @@ import { BlogListType } from 'src/models/blog.model';
 
 type Props = {
   data: BlogListType;
+  // eslint-disable-next-line no-unused-vars
+  onEditBlog?: (blog: BlogListType) => void;
 };
 
 const BlogItemComponent = (props: Props) => {
-  const { data } = props;
+  const { data, onEditBlog } = props;
 
   return (
-    <li className='media'>
+    <li className='media align-items-center'>
       <Link to={data.id}>
         <img src={data.image} className='mr-3' width={64} height={64} alt='...' loading='lazy' />
       </Link>
@@ -21,6 +23,7 @@ const BlogItemComponent = (props: Props) => {
         </Link>
         <span className='media__content text-truncate'>{data.content}</span>
       </div>
+      <button type='button' className='btn btn-secondary' onClick={onEditBlog ? () => onEditBlog(data) : undefined}>Edit</button>
     </li>
   );
 };

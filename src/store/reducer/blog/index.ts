@@ -12,6 +12,7 @@ interface blogState {
   loadingBlogPag: boolean;
 
   loadingCreate: boolean;
+  loadingEdit: boolean;
 }
 
 // Define the initial state using that type
@@ -19,12 +20,15 @@ const initialState: blogState = {
   // Total data
   total: 0,
 
-  // blogPagination
+  // Blog pagination
   blogPagination: null,
   loadingBlogPag: true,
 
-  // create blog
+  // Create blog
   loadingCreate: false,
+
+  // Edit blog
+  loadingEdit: false,
 };
 
 export const blogSlice = createSlice({
@@ -83,6 +87,33 @@ export const blogSlice = createSlice({
       const currentState = state;
       currentState.loadingCreate = false;
     },
+
+    // Create blog
+    editBlogReducer: (state) => {
+      const currentState = state;
+      currentState.loadingEdit = true;
+    },
+    editBlogSuccessReducer: (state, action: PayloadAction<BlogListType>) => {
+      const currentState = state;
+      const currentData = currentState.blogPagination?.map((item) => {
+        if (item.id === action.payload.id) {
+          return ({
+            ...item,
+            title: action.payload.title,
+            content: action.payload.content,
+            image: action.payload.image
+          });
+        }
+        return item;
+      });
+
+      currentState.blogPagination = currentData as BlogListType[];
+      currentState.loadingEdit = false;
+    },
+    editBlogFailedReducer: (state) => {
+      const currentState = state;
+      currentState.loadingEdit = false;
+    },
   },
 });
 
@@ -97,6 +128,10 @@ export const {
   createBlogReducer,
   createBlogSuccessReducer,
   createBlogFailedReducer,
+
+  editBlogReducer,
+  editBlogSuccessReducer,
+  editBlogFailedReducer,
 } = blogSlice.actions;
 
 export default blogSlice.reducer;
