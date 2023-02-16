@@ -36,10 +36,10 @@ const Blog = () => {
   }, [page]);
 
   return (
-    <main className='content'>
+    <main className='content blog__list'>
       <div className='container'>
-        <h1 className='py-3 text-center'>Blog article</h1>
-        <ul className='list-unstyled my-3 blog__list'>
+        <h1 className='mb-3 text-center'>Blog article</h1>
+        <ul className='list-unstyled my-3 '>
           {blog && blog.length && (
             <>
               {blog.map((item) => (

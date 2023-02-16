@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import blogApi from 'src/api/blog/blogApi';
+import LoadingComponent from 'src/components/Loading';
 import NotFoundDataComponent from 'src/components/NotfoundData';
+
+import { BlogListType } from 'src/models/blog.model';
 
 const BlogDetail = () => {
   const { blogId } = useParams();
-  const [blogDetail, setBlogDetail] = useState(null);
+
+  const [blogDetail, setBlogDetail] = useState<BlogListType | null>(null);
   const [loading, setLoading] = useState(true);
-  console.log({ loading, blogDetail });
 
   // Fetch blog detail
   useEffect(() => {
@@ -28,11 +31,25 @@ const BlogDetail = () => {
   }, []);
 
   return (
-    <main className='content'>
+    <main className='content blog__detail'>
       <div className='container'>
-        <h5>Blog detail</h5>
-        <NotFoundDataComponent />
+        {blogDetail && !loading && Object.keys(blogDetail).length ? (
+          <>
+            <h1 className='mb-3 text-center'>Blog detail</h1>
+
+            <div className='card'>
+              <img src={blogDetail.image} className='card-img-top' alt='... ' />
+              <div className='card-body'>
+                <h5 className='card-title'>{blogDetail.title}</h5>
+                <p className='card-text'>{blogDetail.content}</p>
+              </div>
+            </div>
+          </>
+        ) : (
+          <NotFoundDataComponent />
+        )}
       </div>
+      {loading && <LoadingComponent />}
     </main>
   );
 };

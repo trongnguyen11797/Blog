@@ -23,11 +23,11 @@ const App = () => {
   ]);
 
   return (
-    <>
+    <div className='container__wrapper'>
       <HeaderLayout />
       <RouterProvider router={router} />
       <FooterLayout />
-    </>
+    </div>
   );
 };
 

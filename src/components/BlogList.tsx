@@ -15,7 +15,7 @@ const BlogListComponent = (props: Props) => {
         <img src={data.image} className='mr-3' width={64} height={64} alt='...' loading='lazy' />
       </Link>
       <div className='media-body'>
-        <Link to={`${LinkConstant.blog}/${data.id}`}>
+        <Link to={data.id}>
           <h5 className='mt-0 mb-1 media__title'>{data.title}</h5>
         </Link>
         <span className='media__content text-truncate'>{data.content}</span>
