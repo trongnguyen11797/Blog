@@ -8,6 +8,8 @@ import PaginationComponent from 'src/components/Pagination';
 import TitleComponent from 'src/components/Title';
 
 import { BlogListType } from 'src/models/blog.model';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+import { decrement, increment } from 'src/store/reducer/counter';
 
 const PAGE_LIMIT = 10;
 
@@ -15,6 +17,9 @@ const Blog = () => {
   const [blog, setBlog] = useState<BlogListType[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
+  const count = useAppSelector((state) => state.counter.value);
+  console.log('Blog ~ count', count);
+  const dispatch = useAppDispatch();
 
   // Fetch blog lists
   useEffect(() => {
@@ -55,6 +60,13 @@ const Blog = () => {
 
         {loading && <LoadingComponent />}
       </div>
+
+      <button type='button' className='btn btn-primary' onClick={() => dispatch(increment())}>
+        tang
+      </button>
+      <button type='button' className='btn btn-primary' onClick={() => dispatch(decrement())}>
+        giam
+      </button>
     </div>
   );
 };
