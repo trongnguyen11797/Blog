@@ -1,11 +1,10 @@
 import axios from 'axios';
-
-const path = 'https://5f55a98f39221c00167fb11a.mockapi.io/blogs';
+import { URL_API } from 'src/common/constant';
 
 export default {
   async fetchBlogPagination({ page, limit }: { page: number; limit: number }) {
     try {
-      const resp = await axios.get(`${path}?page=${page}&limit=${limit}`);
+      const resp = await axios.get(`${URL_API.blog}?page=${page}&limit=${limit}`);
 
       return resp.data;
     } catch (error) {
@@ -15,7 +14,7 @@ export default {
 
   async fetchBlogLists() {
     try {
-      const resp = await axios.get(path);
+      const resp = await axios.get(URL_API.blog);
 
       return resp.data;
     } catch (error) {
@@ -25,7 +24,7 @@ export default {
 
   async fetchBlogDetail(id: string) {
     try {
-      const resp = await axios.get(`${path}/${id}`);
+      const resp = await axios.get(`${URL_API.blog}/${id}`);
 
       return resp.data;
     } catch (error) {

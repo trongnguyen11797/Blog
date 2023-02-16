@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import { linkConstant } from 'src/common/constant';
+import { LINK_CONSTANT } from 'src/common/constant';
 
 type Props = {
   title: string;
@@ -14,7 +14,7 @@ const NotFoundDataComponent = (props: Props) => {
       <h3>{title}</h3>
 
       {isBack && (
-        <Link to={linkConstant.blog}>
+        <Link to={LINK_CONSTANT.blog}>
           <button type='button' className='btn btn-primary mt-3'>
             Black
           </button>
