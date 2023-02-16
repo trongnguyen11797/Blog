@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import axios from 'axios';
 import { put, takeEvery, takeLatest } from 'redux-saga/effects';
-import { URL_API } from 'src/common/constant';
+import { PAGE_LIMIT, URL_API } from 'src/common/constant';
 
 import {
   CREATE_BLOG,
@@ -24,7 +24,7 @@ import {
   getTotalDataFailedReducer,
   editBlogReducer,
   editBlogFailedReducer,
-  editBlogSuccessReducer
+  editBlogSuccessReducer,
 } from '../reducer/blog';
 
 // Create blog
@@ -65,11 +65,10 @@ function* getBlogSaga(): any {
 // Get blog pagination
 function* getBlogPagSaga(action: any): any {
   const { payload } = action;
-  const { page, limit } = payload;
 
   yield put(getBlogPagReducer());
   try {
-    const resp = yield axios.get(`${URL_API.blog}?page=${page}&limit=${limit}`);
+    const resp = yield axios.get(URL_API.blog, { params: { ...payload, limit: PAGE_LIMIT } });
 
     yield put(getBlogPagSuccessReducer(resp.data));
   } catch (error) {

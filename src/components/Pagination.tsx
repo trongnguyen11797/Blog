@@ -1,4 +1,5 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { onGetParams } from 'src/common/function';
 
 import { useAppSelector } from 'src/store/hooks';
 
@@ -10,11 +11,20 @@ type Props = {
 const PaginationComponent = (props: Props) => {
   const { currentPage, limit } = props;
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const total = useAppSelector((state) => state.blog.total);
 
   const onChangePage = (i: number) => {
-    navigate(`?page=${i}`);
+    navigate({
+      pathname: '/',
+      search: onGetParams({
+        page: i.toString(),
+        search: searchParams.get('search') || undefined,
+        sortBy: searchParams.get('sortBy') || undefined,
+        order: searchParams.get('order') || undefined,
+      })
+    });
   };
 
   const renderPagination = () => {

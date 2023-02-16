@@ -29,3 +29,10 @@ export type ModalListsType = {
 }
 
 export type ArgumentOnBlurForm = { value: string; type: DataModalFormKey; msg: string }
+
+export type ParamsType = {
+  page?: string;
+  sortBy?: string;
+  order?: string;
+  search?: string;
+}
