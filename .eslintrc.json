@@ -29,6 +29,7 @@
         "jsx-quotes": ["error", "prefer-single"],
         "linebreak-style": 0,
         "default-param-last": 0,
+        "react/require-default-props": 0,
         "no-underscore-dangle": 0,
         "import/no-extraneous-dependencies": [0, {"devDependencies": false}],
         "jsx-a11y/label-has-associated-control": 0,

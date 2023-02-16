@@ -1,4 +1,4 @@
-.custom__loading {
+.loading__container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -8,6 +8,10 @@
   top: 0;
   left: 0;  
   z-index: 100;
+
+  &.inside {
+    position: absolute;
+  }
 
   &::after {
     content: '';
