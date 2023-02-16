@@ -15,7 +15,7 @@ const TitleComponent = (props: Props) => {
       <h1>{title}</h1>
 
       {isBack && (
-        <button type='button' onClick={() => navigate(-1)} className='btn btn-light'>
+        <button type='button' onClick={() => navigate(-1)} className='btn btn-secondary'>
           &#8592; Back
         </button>
       )}

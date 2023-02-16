@@ -1,45 +1,49 @@
 import { useEffect, useState } from 'react';
+import { useLocation, useSearchParams } from 'react-router-dom';
 
 import blogApi from 'src/api/blog/blogApi';
 
 import BlogItemComponent from 'src/components/BlogItem';
 import LoadingComponent from 'src/components/Loading';
+import NotFoundDataComponent from 'src/components/NotfoundData';
 import PaginationComponent from 'src/components/Pagination';
 import TitleComponent from 'src/components/Title';
 
 import { BlogListType } from 'src/models/blog.model';
-import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import { decrement, increment } from 'src/store/reducer/counter';
 
 const PAGE_LIMIT = 10;
 
 const Blog = () => {
+  const [searchParams] = useSearchParams();
+  const location = useLocation();
+
   const [blog, setBlog] = useState<BlogListType[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [page, setPage] = useState<number>(1);
-  const count = useAppSelector((state) => state.counter.value);
-  console.log('Blog ~ count', count);
-  const dispatch = useAppDispatch();
 
-  // Fetch blog lists
+  // Fetch blog lists, rerender if router change
   useEffect(() => {
-    const fetchBlogLists = async () => {
+    const fetchBlogPagination = async () => {
       setLoading(true);
-      const resp = await blogApi.fetchBlogLists({
-        page,
+      const resp = await blogApi.fetchBlogPagination({
+        page: Number(searchParams.get('page')) || 1,
         limit: PAGE_LIMIT,
       });
       if (!resp.error) {
         setLoading(false);
-        setBlog(resp);
+        if (resp?.length) {
+          setBlog(resp);
+        } else {
+          setBlog(null);
+        }
       } else {
         setLoading(false);
+        setBlog(null);
         console.log(resp.msg);
       }
     };
 
-    fetchBlogLists();
-  }, [page]);
+    fetchBlogPagination();
+  }, [location]);
 
   return (
     <div className='container'>
@@ -47,26 +51,20 @@ const Blog = () => {
         <TitleComponent title='Blog article' />
 
         <ul className='list-unstyled my-3 '>
-          {blog && blog.length && (
+          {blog && blog.length > 0 && (
             <>
               {blog.map((item) => (
                 <BlogItemComponent key={item.id} data={item} />
               ))}
-
-              <PaginationComponent currentPage={page} data={blog} setPage={setPage} />
+              <PaginationComponent currentPage={Number(searchParams.get('page')) || 1} limit={PAGE_LIMIT} />
             </>
           )}
+
+          {!blog && !loading && <NotFoundDataComponent title='Not found blog' isBack />}
         </ul>
 
         {loading && <LoadingComponent />}
       </div>
-
-      <button type='button' className='btn btn-primary' onClick={() => dispatch(increment())}>
-        tang
-      </button>
-      <button type='button' className='btn btn-primary' onClick={() => dispatch(decrement())}>
-        giam
-      </button>
     </div>
   );
 };

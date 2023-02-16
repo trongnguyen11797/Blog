@@ -1,25 +1,38 @@
-import { BlogListType } from 'src/models/blog.model';
+import { useNavigate } from 'react-router-dom';
+
+import { useAppSelector } from 'src/store/hooks';
 
 type Props = {
   currentPage: number;
-  data: BlogListType[];
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  limit: number;
 };
 
 const PaginationComponent = (props: Props) => {
-  const { currentPage, data, setPage } = props;
+  const { currentPage, limit } = props;
+  const navigate = useNavigate();
 
-  return (
-    <ul className='pagination w-100 justify-content-center mt-4'>
-      {data.map((item, idx) => (
-        <li className={`page-item ${currentPage === idx + 1 ? 'active' : ''}`} key={item.id}>
-          <button type='button' className='page-link' onClick={() => setPage(idx + 1)}>
-            {idx + 1}
+  const total = useAppSelector((state) => state.blog.total);
+
+  const onChangePage = (i: number) => {
+    navigate(`?page=${i}`);
+  };
+
+  const renderPagination = () => {
+    const html = [];
+    for (let i = 1; i <= Math.ceil(total / limit); i += 1) {
+      html.push(
+        <li className={`page-item ${currentPage === i ? 'active' : ''}`} key={i}>
+          <button type='button' className='page-link' onClick={() => onChangePage(i)} disabled={currentPage === i}>
+            {i}
           </button>
         </li>
-      ))}
-    </ul>
-  );
+      );
+    }
+
+    return html;
+  };
+
+  return <ul className='pagination mt-4 justify-content-center'>{renderPagination().map((item) => item)}</ul>;
 };
 
 export default PaginationComponent;

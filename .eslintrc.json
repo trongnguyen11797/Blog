@@ -30,8 +30,10 @@
         "linebreak-style": 0,
         "default-param-last": 0,
         "no-nested-ternary": 0,
+        "comma-dangle": 0,
         "react/require-default-props": 0,
         "no-underscore-dangle": 0,
+        "import/prefer-default-export": 0,
         "import/no-extraneous-dependencies": [0, {"devDependencies": false}],
         "jsx-a11y/label-has-associated-control": 0,
          "react/function-component-definition": [2, {

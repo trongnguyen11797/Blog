@@ -36,9 +36,7 @@ const BlogDetail = () => {
   return (
     <article className='blog__detail'>
       <div className='container'>
-        {loading ? (
-          <LoadingComponent />
-        ) : blogDetail && !loading && Object.keys(blogDetail).length ? (
+        {blogDetail && !loading && Object.keys(blogDetail).length ? (
           <>
             <TitleComponent title='Blog detail' isBack />
 
@@ -51,10 +49,9 @@ const BlogDetail = () => {
             </div>
           </>
         ) : (
-          <NotFoundDataComponent />
+          <NotFoundDataComponent title='Not found blog article' isBack />
         )}
       </div>
-      {loading && <LoadingComponent />}
     </article>
   );
 };

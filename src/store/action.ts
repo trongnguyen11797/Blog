@@ -1,0 +1,9 @@
+export const actionTypes = {
+  // Create blog
+  CREATE_BLOG_SUCCESS: 'CREATE_BLOG_SUCCESS',
+  CREATE_BLOG_PENDING: 'CREATE_BLOG_PENDING',
+  CREATE_BLOG_FAILED: 'CREATE_BLOG_FAILED',
+
+  // Save blog data
+  SAVE_BLOG_LISTS: 'SAVE_BLOG_LISTS',
+};

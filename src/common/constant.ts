@@ -1,5 +1,3 @@
-const LinkConstant = {
+export const linkConstant = {
   blog: '/',
 };
-
-export default LinkConstant;
