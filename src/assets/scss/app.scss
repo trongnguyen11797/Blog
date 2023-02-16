@@ -4,7 +4,12 @@
 
 // Page style
 @import "pages/blog";
+@import "pages/blog-detail";
 
 // Component style 
 @import "components/loading.scss";
+@import "components/notfound.scss";
+
+// Global style
+@import "global.scss";
 @import "components/title";

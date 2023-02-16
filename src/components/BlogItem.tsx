@@ -1,4 +1,6 @@
 import { memo } from 'react';
+import { Link } from 'react-router-dom';
+
 import { BlogListType } from 'src/models/blog.model';
 
 type Props = {
@@ -10,10 +12,14 @@ const BlogItemComponent = (props: Props) => {
 
   return (
     <li className='media'>
-      <img src={data.image} className='mr-3' width={64} height={64} alt='...' loading='lazy' />
+      <Link to={data.id}>
+        <img src={data.image} className='mr-3' width={64} height={64} alt='...' loading='lazy' />
+      </Link>
       <div className='media-body'>
-        <h5 className='mt-0 mb-1'>{data.title}</h5>
-        <span className='content text-truncate'>{data.content}</span>
+        <Link to={data.id}>
+          <h5 className='mt-0 mb-1 media__title'>{data.title}</h5>
+        </Link>
+        <span className='media__content text-truncate'>{data.content}</span>
       </div>
     </li>
   );

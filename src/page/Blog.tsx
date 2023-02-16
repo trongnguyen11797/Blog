@@ -38,21 +38,23 @@ const Blog = () => {
 
   return (
     <div className='container'>
-      <TitleComponent title='Blog article' />
+      <div className='blog__list'>
+        <TitleComponent title='Blog article' />
 
-      <ul className='list-unstyled my-3 blog__list'>
-        {blog && blog.length && (
-          <>
-            {blog.map((item) => (
-              <BlogItemComponent key={item.id} data={item} />
-            ))}
+        <ul className='list-unstyled my-3 '>
+          {blog && blog.length && (
+            <>
+              {blog.map((item) => (
+                <BlogItemComponent key={item.id} data={item} />
+              ))}
 
-            <PaginationComponent currentPage={page} data={blog} setPage={setPage} />
-          </>
-        )}
-      </ul>
+              <PaginationComponent currentPage={page} data={blog} setPage={setPage} />
+            </>
+          )}
+        </ul>
 
-      {loading && <LoadingComponent />}
+        {loading && <LoadingComponent />}
+      </div>
     </div>
   );
 };

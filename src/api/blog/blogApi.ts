@@ -12,4 +12,14 @@ export default {
       return { error: true, msg: 'Error' };
     }
   },
+
+  async fetchBlogDetail(id: string) {
+    try {
+      const resp = await axios.get(`${path}/${id}`);
+
+      return resp.data;
+    } catch (error) {
+      return { error: true, msg: 'Error' };
+    }
+  },
 };
