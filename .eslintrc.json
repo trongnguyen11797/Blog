@@ -33,6 +33,7 @@
         "comma-dangle": 0,
         "react/require-default-props": 0,
         "no-underscore-dangle": 0,
+        "max-len": [2, { "code": 200 }],
         "import/prefer-default-export": 0,
         "import/no-extraneous-dependencies": [0, {"devDependencies": false}],
         "jsx-a11y/label-has-associated-control": 0,

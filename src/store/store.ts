@@ -11,7 +11,9 @@ export const store = configureStore({
   reducer: {
     blog: blogReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(middleware),
+  middleware: (getDefaultMiddleware) => (
+    getDefaultMiddleware({ serializableCheck: false }).concat(middleware)
+  ),
 });
 
 // Run saga
