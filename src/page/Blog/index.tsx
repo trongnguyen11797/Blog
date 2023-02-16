@@ -53,8 +53,9 @@ const Blog = () => {
         <button
           type='button'
           className='btn btn-primary'
-          onClick={() => setModalList((prevState) => ({
-            ...prevState,
+          onClick={() => setModalList(({
+            data: null,
+            type: 'create',
             isShow: true,
           }))}
         >

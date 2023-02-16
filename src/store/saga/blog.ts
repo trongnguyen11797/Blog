@@ -40,7 +40,7 @@ function* createBlogSaga(action: any): any {
   };
 
   try {
-    const resp: any = yield axios.post(URL_API.blog, { body: params });
+    const resp: any = yield axios.post(URL_API.blog, params);
 
     yield put(createBlogSuccessReducer({ page, newData: resp.data }));
     alert('Create success');
@@ -88,7 +88,7 @@ function* editBlogPagSaga(action: any): any {
     content: data.content.value,
   };
   try {
-    const resp = yield axios.put(`${URL_API.blog}/${data.id}`, { body: params });
+    const resp = yield axios.put(`${URL_API.blog}/${data.id}`, params);
 
     alert('Edit success');
     yield put(editBlogSuccessReducer(resp.data));
