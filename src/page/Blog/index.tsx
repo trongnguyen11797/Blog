@@ -14,6 +14,8 @@ import TitleComponent from 'src/components/Title';
 
 import { BlogListType, ModalListsType } from 'src/models/blog.model';
 
+import FilterComponent from './Filter';
+
 import ModalBlog from './Modal';
 
 const Blog = () => {
@@ -23,7 +25,6 @@ const Blog = () => {
   const {
     blogPagination, loadingBlogPag
   } = useAppSelector((state) => state.blog);
-
   const [modalList, setModalList] = useState<ModalListsType>({
     isShow: false,
     data: null,
@@ -41,7 +42,14 @@ const Blog = () => {
   // Fetch blog with pagination, re-render if router change
   // Fetch total data
   useEffect(() => {
-    dispatch({ type: GET_BLOG_PAG, payload: { page: Number(searchParams.get('page')) || 1, limit: PAGE_LIMIT } });
+    const paramsQuery = {
+      page: searchParams.get('page') || 1,
+      search: searchParams.get('search') || undefined,
+      sortBy: searchParams.get('sortBy') || undefined,
+      order: searchParams.get('order') || undefined,
+    };
+
+    dispatch({ type: GET_BLOG_PAG, payload: paramsQuery });
     dispatch({ type: GET_TOTAL });
   }, [location]);
 
@@ -62,6 +70,8 @@ const Blog = () => {
           + Add new blog
         </button>
 
+        <FilterComponent />
+
         <ul className='list-unstyled my-3 '>
           {blogPagination && blogPagination.length > 0 && (
             <>
@@ -73,6 +83,7 @@ const Blog = () => {
           )}
 
           {!blogPagination && !loadingBlogPag && <NotFoundDataComponent title='Not found blog' isBack />}
+          {blogPagination && blogPagination.length === 0 && !loadingBlogPag && <NotFoundDataComponent title='Not found blog' />}
         </ul>
 
         {loadingBlogPag && <LoadingComponent />}
