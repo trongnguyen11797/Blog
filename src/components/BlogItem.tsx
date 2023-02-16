@@ -7,6 +7,7 @@ type Props = {
 
 const BlogItemComponent = (props: Props) => {
   const { data } = props;
+
   return (
     <li className='media'>
       <img src={data.image} className='mr-3' width={64} height={64} alt='...' loading='lazy' />
