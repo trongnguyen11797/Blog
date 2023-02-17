@@ -1,13 +1,20 @@
 /* eslint-disable no-alert */
 import axios from 'axios';
+import { PayloadAction } from '@reduxjs/toolkit';
 import { put, takeEvery } from 'redux-saga/effects';
+
 import { PAGE_LIMIT, URL_API } from 'src/common/constant';
+
+import {
+  ArgumentSagaBlog, BlogListType, ParamsType, ResponseCreate
+} from 'src/models/blog.model';
 
 import {
   CREATE_BLOG,
 
   GET_TOTAL,
   GET_BLOG_PAG,
+
   EDIT_BLOG,
 } from '../action';
 
@@ -28,7 +35,7 @@ import {
 } from '../reducer/blog';
 
 // Create blog
-function* createBlogSaga(action: any): any {
+function* createBlogSaga(action: PayloadAction<ArgumentSagaBlog>) {
   yield put(createBlogReducer());
   const { payload } = action;
   const { data, page, onResetForm } = payload;
@@ -40,9 +47,9 @@ function* createBlogSaga(action: any): any {
   };
 
   try {
-    const resp: any = yield axios.post(URL_API.blog, params);
+    const resp: ResponseCreate = yield axios.post(URL_API.blog, params);
 
-    yield put(createBlogSuccessReducer({ page, newData: resp.data }));
+    yield put(createBlogSuccessReducer({ page: page || 1, newData: resp.data as BlogListType }));
     alert('Create success');
     onResetForm();
   } catch (error) {
@@ -52,33 +59,34 @@ function* createBlogSaga(action: any): any {
 }
 
 // Get blog list
-function* getBlogSaga(): any {
+function* getBlogSaga() {
   try {
-    const resp = yield axios.get(URL_API.blog);
+    const resp: ResponseCreate = yield axios.get(URL_API.blog);
 
-    yield put(getTotalDataSuccessReducer(resp.data));
+    yield put(getTotalDataSuccessReducer(resp.data as BlogListType[]));
   } catch (error) {
     yield put(getTotalDataFailedReducer());
   }
 }
 
 // Get blog pagination
-function* getBlogPagSaga(action: any): any {
+function* getBlogPagSaga(action: PayloadAction<ParamsType>) {
   const { payload } = action;
 
   yield put(getBlogPagReducer());
   try {
-    const resp = yield axios.get(URL_API.blog, { params: { ...payload, limit: PAGE_LIMIT } });
+    const resp: ResponseCreate = yield axios.get(URL_API.blog, { params: { ...payload, limit: PAGE_LIMIT } });
 
-    yield put(getBlogPagSuccessReducer(resp.data));
+    yield put(getBlogPagSuccessReducer(resp.data as BlogListType[]));
   } catch (error) {
     yield put(getBlogPagFailedReducer());
   }
 }
 
 // Edit blog
-function* editBlogPagSaga(action: any): any {
+function* editBlogPagSaga(action: PayloadAction<ArgumentSagaBlog>) {
   yield put(editBlogReducer());
+
   const { payload } = action;
   const { data, onResetForm } = payload;
   const params = {
@@ -87,10 +95,10 @@ function* editBlogPagSaga(action: any): any {
     content: data.content.value,
   };
   try {
-    const resp = yield axios.put(`${URL_API.blog}/${data.id}`, params);
+    const resp: ResponseCreate = yield axios.put(`${URL_API.blog}/${data.id}`, params);
 
     alert('Edit success');
-    yield put(editBlogSuccessReducer(resp.data));
+    yield put(editBlogSuccessReducer(resp.data as BlogListType));
     onResetForm();
   } catch (error) {
     alert('Edit failed');

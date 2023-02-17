@@ -1,11 +1,15 @@
+import { useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+
 import { onGetParams, searchDebounce } from 'src/common/function';
 
 const FilterComponent = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const onChangeFilter = ({ value, type }: any) => {
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  const onChangeFilter = ({ value, type }: {value: string; type: string}) => {
     // Get current query params
     const getParams = {
       page: '1',
@@ -23,6 +27,14 @@ const FilterComponent = () => {
     });
   };
 
+  // Reset filter
+  const onResetFilter = () => {
+    navigate('/');
+    if (searchRef.current) {
+      searchRef.current.value = '';
+    }
+  };
+
   return (
     <form className='mt-3'>
       <div className='row'>
@@ -32,6 +44,7 @@ const FilterComponent = () => {
             <input
               type='text'
               className='form-control'
+              ref={searchRef}
               defaultValue={searchParams.get('search') || ''}
               id='title'
               placeholder='Input title'
@@ -63,7 +76,7 @@ const FilterComponent = () => {
         </div>
       </div>
 
-      <button type='button' className='w-25 btn btn-danger' onClick={() => navigate('/')}>Reset</button>
+      <button type='button' className='w-25 btn btn-danger' onClick={onResetFilter}>Reset</button>
     </form>
   );
 };

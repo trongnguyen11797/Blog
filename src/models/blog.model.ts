@@ -20,6 +20,7 @@ export type DataModalForm = {
     value: string;
     msg: string
   },
+  id?: string;
 }
 
 export type ModalListsType = {
@@ -36,3 +37,18 @@ export type ParamsType = {
   order?: string;
   search?: string;
 }
+
+export type ResponseCreate = {
+  config?: any;
+  data: BlogListType | BlogListType[];
+  headers?: any;
+  request?: any;
+  status?: number;
+  statusText?: string;
+};
+
+export type ArgumentSagaBlog = {
+  data: DataModalForm;
+  page?: number;
+  onResetForm: () => void;
+};
